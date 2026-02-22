@@ -3,7 +3,7 @@ module RAM_tb();
     // Input and Output Declaration
     logic clk, write, read;
     logic [7:0] data_in;
-    logic [18:0] address;
+    logic [15:0] address;
     logic [8:0] data_out;
 
     localparam TESTS = 100;
@@ -11,7 +11,7 @@ module RAM_tb();
     integer error_counter, correct_counter;
 
     // Testbench Data Arrays
-    bit [18:0] address_array[];
+    bit [15:0] address_array[];
     bit [7:0] data_to_write_array[];
     bit [8:0] data_read_expect_assoc[bit [18:0]];
     bit [8:0] data_read_queue[$];
@@ -102,4 +102,5 @@ task check_result(input bit [18:0] Expected_Address);
 endtask
 
 endmodule
+
 ``
