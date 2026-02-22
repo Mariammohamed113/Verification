@@ -73,38 +73,49 @@ module PE_TB;
     endtask
 
     // Assertions for checking the design
-    property p_reset;
-        @(posedge clk) rst |-> (Y == 2'b00 && valid == 1'b0);
-    endproperty
+property p_high_pri_bit3;
+    @(posedge clk) disable iff (rst)
+        (D[3] == 1'b1) |=> 
+        (Y == 2'b00 && valid == 1'b1);
+endproperty
 
-    property p_case_1000;
-        @(posedge clk) disable iff (rst) (D == 4'b1000) |=> (Y == 2'b00 && valid == 1'b1);
-    endproperty
+property p_high_pri_bit2;
+    @(posedge clk) disable iff (rst)
+        (D[3] == 1'b0 && D[2] == 1'b1) |=> 
+        (Y == 2'b01 && valid == 1'b1);
+endproperty
 
-    property p_case_0100;
-        @(posedge clk) disable iff (rst) (D == 4'b0100) |=> (Y == 2'b01 && valid == 1'b1);
-    endproperty
 
-    property p_case_0010;
-        @(posedge clk) disable iff (rst) (D == 4'b0010) |=> (Y == 2'b10 && valid == 1'b1);
-    endproperty
+property p_high_pri_bit1;
+    @(posedge clk) disable iff (rst)
+        (D[3:2] == 2'b00 && D[1] == 1'b1) |=> 
+        (Y == 2'b10 && valid == 1'b1);
+endproperty
 
-    property p_case_0001;
-        @(posedge clk) disable iff (rst) (D == 4'b0001) |=> (Y == 2'b11 && valid == 1'b1);
-    endproperty
 
-    property p_case_0000;
-        @(posedge clk) disable iff (rst) (D == 4'b0000) |=> (Y == 2'b00 && valid == 1'b0);
-    endproperty
+property p_high_pri_bit0;
+    @(posedge clk) disable iff (rst)
+        (D[3:1] == 3'b000 && D[0] == 1'b1) |=> 
+        (Y == 2'b11 && valid == 1'b1);
+endproperty
+
+
+property p_case_zero;
+    @(posedge clk) disable iff (rst)
+        (D == 4'b0000) |=> 
+        (Y == 2'b00 && valid == 1'b0);
+endproperty
+    
 
     initial begin
-        assert property (p_reset) else $fatal("Assertion failed during reset: Y= %b, valid =%b", Y, valid);
-        assert property (p_case_1000) else $fatal("Assertion failed for D = 1000: Y= %b, valid =%b", Y, valid);
-        assert property (p_case_0100) else $fatal("Assertion failed for D = 0100: Y= %b, valid =%b", Y, valid);
-        assert property (p_case_0010) else $fatal("Assertion failed for D = 0010: Y= %b, valid =%b", Y, valid);
-        assert property (p_case_0001) else $fatal("Assertion failed for D = 0001: Y= %b, valid =%b", Y, valid);
-        assert property (p_case_0000) else $fatal("Assertion failed for D = 0000: Y= %b, valid =%b", Y, valid);
-    end
+    assert property (p_reset);
+    assert property (p_high_pri_bit3);
+    assert property (p_high_pri_bit2);
+    assert property (p_high_pri_bit1);
+    assert property (p_high_pri_bit0);
+    assert property (p_case_zero);
+
+end
 
     // Cover properties for monitoring coverage
     cover property (p_case_1000);
@@ -115,3 +126,4 @@ module PE_TB;
 
 
 endmodule
+
