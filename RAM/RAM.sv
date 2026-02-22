@@ -3,7 +3,7 @@ module RAM(
     input write,
     input read,
     input [7:0] data_in,
-    input [18:0] address,
+    input [15:0] address,
 
     output reg [8:0] data_out
 );
@@ -16,5 +16,6 @@ always @(posedge clk) begin
     else if (read)
         data_out = mem_array[address];
 end
+
 
 endmodule
