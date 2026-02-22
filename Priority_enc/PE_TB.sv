@@ -78,23 +78,23 @@ module PE_TB;
     endproperty
 
     property p_case_1000;
-        @(posedge clk) disable iff (rst) (D == 4'b1000) |-> (Y == 2'b00 && valid == 1'b1);
+        @(posedge clk) disable iff (rst) (D == 4'b1000) |=> (Y == 2'b00 && valid == 1'b1);
     endproperty
 
     property p_case_0100;
-        @(posedge clk) disable iff (rst) (D == 4'b0100) |-> (Y == 2'b01 && valid == 1'b1);
+        @(posedge clk) disable iff (rst) (D == 4'b0100) |=> (Y == 2'b01 && valid == 1'b1);
     endproperty
 
     property p_case_0010;
-        @(posedge clk) disable iff (rst) (D == 4'b0010) |-> (Y == 2'b10 && valid == 1'b1);
+        @(posedge clk) disable iff (rst) (D == 4'b0010) |=> (Y == 2'b10 && valid == 1'b1);
     endproperty
 
     property p_case_0001;
-        @(posedge clk) disable iff (rst) (D == 4'b0001) |-> (Y == 2'b11 && valid == 1'b1);
+        @(posedge clk) disable iff (rst) (D == 4'b0001) |=> (Y == 2'b11 && valid == 1'b1);
     endproperty
 
     property p_case_0000;
-        @(posedge clk) disable iff (rst) (D == 4'b0000) |-> (Y == 2'b00 && valid == 1'b0);
+        @(posedge clk) disable iff (rst) (D == 4'b0000) |=> (Y == 2'b00 && valid == 1'b0);
     endproperty
 
     initial begin
@@ -112,5 +112,6 @@ module PE_TB;
     cover property (p_case_0010);
     cover property (p_case_0001);
     cover property (p_case_0000);
+
 
 endmodule
